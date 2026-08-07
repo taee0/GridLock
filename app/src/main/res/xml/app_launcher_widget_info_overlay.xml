@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    v0.8.2 restored minWidth/minHeight to the panel's real 360x374dp size,
+    reasoning the v0.6 shrink to 110dp/150dp was the whole defect. It was not:
+    the widget still rendered under the full panel with that fix alone in
+    place, which means this host honours targetCellWidth/targetCellHeight for
+    initial placement the way v0.6's own comment claimed API 31+ launchers do
+    (so a 3x4 cell request was being sized against this host's own grid,
+    whatever that grid's real column/row count is, not against the panel).
+
+    We do not know this host's actual grid dimensions (it is a single-slot
+    cover-panel host, not a documented multi-app launcher grid), so there is
+    no safe targetCellWidth/targetCellHeight value to request instead. Both
+    attributes are dropped so placement falls back to the pre-API-31 path,
+    sized from minWidth/minHeight directly against the panel.
+-->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="360dp"
+    android:minHeight="374dp"
+    android:updatePeriodMillis="0"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="keyguard|home_screen"
+    android:initialLayout="@layout/widget_layout"
+    android:initialKeyguardLayout="@layout/widget_layout"
+    android:previewLayout="@layout/widget_layout"
+    android:description="@string/widget_description_overlay" />

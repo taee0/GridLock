@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrim"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:id="@+id/deck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cards"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_h"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
+        <!-- One UI puts Close all on a translucent pill, centred under the
+             deck, with a real icon rather than bare text. -->
+        <TextView
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/deck_pad"
+            android:background="@drawable/pill"
+            android:drawablePadding="6dp"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingTop="9dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="9dp"
+            android:text="@string/clear_all"
+            android:textColor="@color/fg"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/none"
+        android:textColor="@color/dim"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+    <!-- The per app sheet the icon chip opens. Parked here so it costs nothing
+         until it is needed, and so it can never be clipped by the deck. -->
+    <LinearLayout
+        android:id="@+id/menu"
+        android:layout_width="@dimen/sheet_w"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sheet"
+        android:elevation="12dp"
+        android:orientation="vertical"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/keep"
+            style="@style/SheetItem"
+            android:text="@string/keep_open" />
+
+        <TextView
+            android:id="@+id/info"
+            style="@style/SheetItem"
+            android:text="@string/app_info" />
+
+        <TextView
+            android:id="@+id/shut"
+            style="@style/SheetItem"
+            android:text="@string/close_app" />
+    </LinearLayout>
+</FrameLayout>

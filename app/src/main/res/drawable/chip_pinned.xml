@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Same plate, ringed, for an app the user has asked to keep open. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/chip" />
+    <stroke
+        android:width="2dp"
+        android:color="@color/fg" />
+</shape>

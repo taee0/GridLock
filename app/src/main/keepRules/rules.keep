@@ -1,0 +1,23 @@
+# Add project specific R8 rules here.
+# AGP will combine all keep rule files in src/main/keepRules to pass to R8
+
+# libspark.so binds its natives by name with RegisterNatives in JNI_OnLoad.
+# If R8 renames or drops any of them the whole registration fails and every
+# getter throws.
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+-keep class apps.ijp.coverrecents.NativeRecentsFactory { *; }
+
+# Launcher libspark. JNI_OnLoad statically registers 38 methods against these
+# two exact class paths, so neither the classes nor the method names can move.
+-keep class apps.ijp.coverscreen.launcher.ui.NativeLayoutParamsFactory { *; }
+-keep class apps.ijp.coverscreen.launcher.CoverScreenAppLauncherApp { *; }
+-keep class apps.ijp.coverscreen.launcher.** { *; }
+-keepclassmembers class android.view.WindowManager$LayoutParams { *; }
+
+# widgets
+-keep class * extends android.appwidget.AppWidgetProvider { *; }
+-keep class * extends android.widget.RemoteViewsService { *; }
+-keep class * extends android.widget.RemoteViewsService$RemoteViewsFactory { *; }
+-keep class * extends android.service.notification.NotificationListenerService { *; }

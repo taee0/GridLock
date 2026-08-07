@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Favourites picker. Sized for the cover panel: about 360dp by 374dp, so
+     every fixed row is counted and the app list takes whatever is left. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/fav_add"
+            android:textColor="@color/fg"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dim"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/setting_card"
+        android:hint="@string/fav_search"
+        android:imeOptions="actionSearch"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textColor="@color/fg"
+        android:textColorHint="@color/dim"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/fav_none_chosen"
+        android:textColor="@color/dim"
+        android:textSize="11sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chosen"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:layout_marginTop="6dp"
+        android:clipToPadding="false" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/edge" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/sheet_item"
+            android:gravity="center"
+            android:minWidth="88dp"
+            android:text="@string/fav_cancel"
+            android:textColor="@color/dim"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/sheet_item"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:minWidth="88dp"
+            android:text="@string/fav_save"
+            android:textColor="@color/fg"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

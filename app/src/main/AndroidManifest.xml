@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- Auto rotate. The overlay that holds the orientation request has to be a
+         real TYPE_APPLICATION_OVERLAY window, same as the app being rebuilt. -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+
+    <!--
+        Usage access. This is an appop permission, so declaring it does not
+        grant it: it only makes this app appear in the usage access list and
+        makes the op settable. Shizuku sets it directly, Settings is the
+        fallback. Without the declaration neither route works.
+    -->
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Shizuku. Optional: the app runs without it, this only unlocks the
+         privileged path (real task removal, system snapshots, real resume). -->
+    <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
+
+    <uses-feature
+        android:name="android.software.activities_on_secondary_displays"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="false" />
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.HOME" />
+        </intent>
+    </queries>
+
+    <application
+        android:name="apps.ijp.coverscreen.launcher.CoverScreenAppLauncherApp"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CoverScreen"
+        tools:targetApi="37">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- No launchMode: it is standard, and noHistory is what removes it. -->
+        <activity
+            android:name=".Kick"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:noHistory="true"
+            android:showOnLockScreen="true"
+            android:showWhenLocked="true"
+            android:taskAffinity=""
+            android:theme="@style/Theme.CoverScreen.Kick" />
+
+        <service
+            android:name=".RecentsEngine"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/recents_service" />
+        </service>
+        <!-- Cover screen overlay window. specialUse because it is not any of
+             the predefined FGS types, same as the launcher app it comes from. -->
+        <service
+            android:name=".OverlayCoverScreen"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="@string/special_use_explanation" />
+        </service>
+
+        <!-- Cover screen widget. display=sub_screen in the samsung descriptor is
+             what makes it show up in the cover screen widget carousel. -->
+        <receiver
+            android:name="apps.ijp.coverscreen.launcher.glance_widget.AppLauncherWidgetReceiver"
+            android:exported="true"
+            android:label="@string/app_name">
+            <!-- APPWIDGET_UPDATE only.
+
+                 Twelve custom actions were declared here as well. An
+                 intent-filter on an exported receiver is a public entry point,
+                 so any app on the device could have driven this widget: switch
+                 its view, change its sort, toggle favourites. exported must stay
+                 true, because the system sends APPWIDGET_UPDATE, but nothing
+                 required the rest to be listed. self() builds
+                 Intent(context, javaClass) and push() builds Intent(context,
+                 cls), so every custom action names its component and is never
+                 matched against a filter. -->
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_launcher_widget_info" />
+            <meta-data
+                android:name="com.samsung.android.appwidget.provider"
+                android:resource="@xml/samsung_widget_cover_info" />
+            <meta-data
+                android:name="com.samsung.android.sdk.subscreen.widget.support_visibility_callback"
+                android:value="true" />
+        </receiver>
+
+        <receiver
+            android:name="apps.ijp.coverscreen.launcher.glance_widget.AppLauncherWidgetReceiverForOverlays"
+            android:exported="true"
+            android:label="@string/app_name">
+            <!-- Same as the receiver above: APPWIDGET_UPDATE only, because
+                 every custom action is delivered to a named component. -->
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_launcher_widget_info_overlay" />
+            <meta-data
+                android:name="com.samsung.android.appwidget.provider"
+                android:resource="@xml/samsung_widget_cover_info" />
+            <meta-data
+                android:name="com.samsung.android.sdk.subscreen.widget.support_visibility_callback"
+                android:value="true" />
+        </receiver>
+
+        <receiver
+            android:name="apps.ijp.coverscreen.launcher.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="apps.ijp.coverscreen.launcher.PackageReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="android.intent.action.PACKAGE_CHANGED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="apps.ijp.coverscreen.launcher.glance_widget.GridRemoteViewsService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name="apps.ijp.coverscreen.launcher.glance_widget.GridRemoteViewsServiceForOverlay"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name="apps.ijp.coverscreen.launcher.glance_widget.KeyBoardRemoteViewsService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name="apps.ijp.coverscreen.launcher.glance_widget.KeyBoardRemoteViewsServiceForOverlay"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <!-- Missing from v0.10: without this declaration the system cannot
+             bind SearchRemoteViewsService, so the adapter never connects and
+             the results list always fell back to its empty view, no matter
+             what was typed. -->
+        <service
+            android:name="apps.ijp.coverscreen.launcher.glance_widget.SearchRemoteViewsService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name="apps.ijp.coverscreen.launcher.glance_widget.SearchRemoteViewsServiceForOverlay"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <service
+            android:name="apps.ijp.coverscreen.launcher.LauncherNotificationListener"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name="apps.ijp.coverscreen.launcher.glance_widget.WidgetLaunchActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:noHistory="true"
+            android:showWhenLocked="true"
+            android:taskAffinity=""
+            android:theme="@style/Theme.CoverScreen.Kick" />
+
+        <activity
+            android:name="apps.ijp.coverscreen.launcher.ui.LauncherHomeActivity"
+            android:exported="true"
+            android:label="@string/cover_launcher"
+            android:launchMode="singleTask"
+            android:showWhenLocked="true"
+            android:theme="@style/Theme.CoverScreen">
+            <!-- No HOME and no LAUNCHER on purpose. This app is not a home
+                 screen replacement and must never appear in the home app
+                 picker or the app drawer. It is opened from the widget, from
+                 MainActivity, or by direct intent. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="apps.ijp.coverscreen.launcher.ui.LauncherSettingsActivity"
+            android:exported="false"
+            android:label="@string/launcher_settings"
+            android:theme="@style/Theme.CoverScreen.Config" />
+
+        <activity
+            android:name="apps.ijp.coverscreen.launcher.ui.AddToFavoritesCSActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@style/Theme.CoverScreen.Config" />
+
+        <!-- WidgetSearchActivity (and its v0.9.1 taskAffinity fix for the
+             back-button-into-the-app bug) is gone as of v0.10. Search is an
+             inline view inside the widget now, the same as grid/list/recent/
+             favourites, so there is no separate Activity, no separate task,
+             and nothing left for the system back button to fall into. -->
+
+        <activity
+            android:name="apps.ijp.coverscreen.launcher.ui.RequestUnlockActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:showWhenLocked="true"
+            android:theme="@style/Theme.CoverScreen.Kick" />
+
+        <activity
+            android:name="apps.ijp.coverscreen.launcher.ui.MirageActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:noHistory="true"
+            android:theme="@style/Theme.CoverScreen.Kick" />
+
+        <!-- widget placeholder activity -->
+        <activity
+            android:name="apps.ijp.coverscreen.launcher.glance_widget.DummyActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@style/Theme.CoverScreen.Kick" />
+
+        <!-- widget helper service -->
+        <service
+            android:name="apps.ijp.coverscreen.launcher.glance_widget.DummyService"
+            android:exported="false" />
+
+        <!-- Receives the Shizuku binder at process start. Harmless when
+             Shizuku is not installed. -->
+        <provider
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:enabled="true"
+            android:exported="true"
+            android:multiprocess="false"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+
+    </application>
+</manifest>

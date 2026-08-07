@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 56dp list item -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingEnd="12dp">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/app_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="@string/widget_icon" />
+
+        <!-- ImageView, not a bare View: this row is inflated by RemoteViews
+             (KeyBoardRemoteViewsService, SearchRemoteViewsService) as well as
+             a normal Activity, and android.view.View is not on RemoteViews'
+             supported-class whitelist. Same defect class as the v0.8.1 and
+             v0.10.2 fixes elsewhere in this project, found here live in
+             logcat: "Class not allowed to be inflated android.view.View" at
+             launcher_row.xml line 28. No src is set, so nothing renders
+             beyond the background drawable, same as the View it replaces. -->
+        <ImageView
+            android:id="@+id/dot"
+            android:layout_width="9dp"
+            android:layout_height="9dp"
+            android:layout_gravity="top|end"
+            android:background="@drawable/dot"
+            android:contentDescription="@null"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="12dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.0071"
+        android:textColor="@color/fg"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/app_star"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:padding="5dp"
+        android:src="@drawable/ic_widget_star"
+        android:contentDescription="@string/fav_add"
+        android:visibility="gone" />
+</LinearLayout>

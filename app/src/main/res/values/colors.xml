@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="bg">#FF000000</color>
+    <color name="fg">#FFFFFFFF</color>
+    <color name="dim">#FF9A9A9A</color>
+    <color name="card">#FF1C1C1E</color>
+    <color name="edge">#1FFFFFFF</color>
+
+    <!-- The deck now blurs what is behind it, so the scrim only has to carry
+         enough dim to keep white cards off a white wallpaper. The old #E6 was
+         opaque enough that a blur underneath it would never have been seen. -->
+    <color name="scrim">#A6000000</color>
+
+    <!-- Laid over a thumbnail as it leaves the centre of the stack. -->
+    <color name="veil">#FF000000</color>
+
+    <color name="chip">#4DFFFFFF</color>
+    <color name="pill">#33FFFFFF</color>
+    <color name="sheet">#F2242426</color>
+    <color name="sheet_press">#26FFFFFF</color>
+</resources>

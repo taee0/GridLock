@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="10dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="6dp">
+
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/pill"
+            android:hint="@string/search_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingStart="12dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="6dp"
+            android:textColor="@color/fg"
+            android:textColorHint="@color/dim"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/pill"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
+            android:textColor="@color/fg"
+            android:textSize="11sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/mode"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="@string/widget_mode"
+            android:padding="6dp"
+            android:src="@drawable/ic_widget_mode" />
+
+        <ImageView
+            android:id="@+id/settings"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="@string/widget_settings"
+            android:padding="6dp"
+            android:src="@drawable/ic_widget_settings" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingTop="6dp"
+        android:paddingEnd="8dp">
+
+        <TextView
+            android:id="@+id/tab_all"
+            style="@style/LauncherTab"
+            android:text="@string/view_grid" />
+
+        <TextView
+            android:id="@+id/tab_fav"
+            style="@style/LauncherTab"
+            android:text="@string/view_favorites" />
+
+        <TextView
+            android:id="@+id/tab_recent"
+            style="@style/LauncherTab"
+            android:text="@string/view_recent" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/apps"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="12dp"
+            android:scrollbars="none" />
+
+        <TextView
+            android:id="@+id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/widget_empty"
+            android:textColor="@color/dim"
+            android:textSize="12sp"
+            android:visibility="gone" />
+    </FrameLayout>
+</LinearLayout>
