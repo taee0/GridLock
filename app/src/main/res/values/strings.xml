@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cover Screen</string>
+    <string name="app_name">GridLock</string>
 
     <string name="service_description">Watches which app is in front so it can pull a real recents switcher up off the nav bar on the cover panel, and drives auto rotate for the cover panel. Screen capture is used only to draw the cards and never leaves the device.</string>
     <string name="service_summary">Recents switcher and auto rotate for the cover panel</string>
@@ -142,7 +142,7 @@
     <string name="pos_center">Center</string>
     <string name="pos_bottom">Bottom</string>
     <string name="opt_autohide_delay">Auto hide after (ms)</string>
-    <string name="cover_launcher">Cover Launcher</string>
+    <string name="cover_launcher">GridLock</string>
     <string name="sec_launcher">Cover launcher</string>
     <string name="open_launcher">Open cover launcher</string>
     <string name="how_launcher">The cover launcher is the app grid shown on the cover screen. Open it from the cover screen widget or from here.</string>
