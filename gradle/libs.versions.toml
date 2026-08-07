@@ -9,6 +9,7 @@ material = "1.10.0"
 activityKtx = "1.8.0"
 recyclerview = "1.4.0"
 shizuku = "13.1.5"
+workmanager = "2.9.0"
 # Dynamic on purpose: this one has to track new Android releases to keep
 # working, and upstream tells you to resolve the newest published build.
 hiddenapibypass = "[4.3,)"
@@ -25,6 +26,7 @@ androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview"
 shizuku-api = { group = "dev.rikka.shizuku", name = "api", version.ref = "shizuku" }
 shizuku-provider = { group = "dev.rikka.shizuku", name = "provider", version.ref = "shizuku" }
 hiddenapibypass = { group = "org.lsposed.hiddenapibypass", name = "hiddenapibypass", version.ref = "hiddenapibypass" }
+workmanager = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workmanager" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

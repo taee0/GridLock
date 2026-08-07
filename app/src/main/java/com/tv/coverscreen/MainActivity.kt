@@ -112,6 +112,9 @@ class MainActivity : AppCompatActivity() {
 
         checkForUpdates()
 
+        // Schedule silent background check every 6 hours.
+        UpdateWorker.schedule(this)
+
         enable.setOnClickListener {
             runCatching {
                 startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
@@ -183,6 +186,8 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         Privileged.watch(shizukuWatch)
         refresh()
+        // Re-check every time the app comes to the foreground.
+        checkForUpdates()
     }
 
     override fun onStop() {
