@@ -49,7 +49,14 @@ object SettingsBackup {
     private fun shell(cmd: String): Pair<Int, String> {
         if (!Privileged.ready()) return -1 to ""
         return runCatching {
-            val process = Shizuku.newProcess(arrayOf("sh", "-c", cmd), null, null)
+            val m = Shizuku::class.java.getDeclaredMethod(
+                "newProcess",
+                Array<String>::class.java,
+                Array<String>::class.java,
+                String::class.java
+            )
+            m.isAccessible = true
+            val process = m.invoke(null, arrayOf("sh", "-c", cmd), null, null) as Process
             val out = process.inputStream.bufferedReader().readText()
             val code = process.waitFor()
             code to out
