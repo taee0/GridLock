@@ -5,7 +5,9 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -33,6 +35,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var launcherSettings: Button
     private lateinit var shizuku: Button
     private lateinit var shizukuState: TextView
+
+    // Update UI
+    private lateinit var versionLabel: TextView
+    private lateinit var updateBanner: LinearLayout
+    private lateinit var updateTitle: TextView
+    private lateinit var updateChangelog: TextView
+    private lateinit var updateInstall: Button
+    private lateinit var updateProgress: TextView
+    private var pendingDownloadUrl: String? = null
 
     /** Repaint the moment the binder lands or the permission is answered. */
     private val shizukuWatch: () -> Unit = { runOnUiThread { refresh() } }
@@ -65,6 +76,41 @@ class MainActivity : AppCompatActivity() {
         launcherSettings = findViewById(R.id.launcher_settings)
         shizuku = findViewById(R.id.shizuku)
         shizukuState = findViewById(R.id.shizuku_state)
+
+        versionLabel = findViewById(R.id.version_label)
+        updateBanner = findViewById(R.id.update_banner)
+        updateTitle = findViewById(R.id.update_title)
+        updateChangelog = findViewById(R.id.update_changelog)
+        updateInstall = findViewById(R.id.update_install)
+        updateProgress = findViewById(R.id.update_progress)
+
+        versionLabel.text = "v${BuildConfig.VERSION_NAME}"
+
+        updateInstall.setOnClickListener {
+            val url = pendingDownloadUrl ?: return@setOnClickListener
+            updateInstall.visibility = View.GONE
+            updateProgress.visibility = View.VISIBLE
+            UpdateInstaller.downloadAndInstall(
+                context = this,
+                url = url,
+                onProgress = { downloading ->
+                    runOnUiThread {
+                        updateProgress.visibility = if (downloading) View.VISIBLE else View.GONE
+                    }
+                },
+                onComplete = { success ->
+                    runOnUiThread {
+                        updateProgress.visibility = View.GONE
+                        if (!success) {
+                            updateInstall.visibility = View.VISIBLE
+                            updateTitle.text = "Install failed — tap to retry"
+                        }
+                    }
+                },
+            )
+        }
+
+        checkForUpdates()
 
         enable.setOnClickListener {
             runCatching {
@@ -182,6 +228,25 @@ class MainActivity : AppCompatActivity() {
         // Connected is the one state with nothing left to press.
         shizuku.isEnabled = access != Privileged.Access.READY
         shizukuState.text = getString(R.string.shizuku_state, Privileged.describe())
+    }
+
+    private fun checkForUpdates() {
+        UpdateChecker.check { release, isNewer ->
+            runOnUiThread {
+                if (release == null) return@runOnUiThread
+                updateBanner.visibility = View.VISIBLE
+                if (isNewer) {
+                    pendingDownloadUrl = release.downloadUrl
+                    updateTitle.text = "New update available — v${release.version}"
+                    updateChangelog.text = release.changelog.ifBlank { "No changelog provided." }
+                    updateInstall.visibility = View.VISIBLE
+                } else {
+                    updateTitle.text = "You\u2019re on the latest version (v${release.version})"
+                    updateChangelog.text = ""
+                    updateInstall.visibility = View.GONE
+                }
+            }
+        }
     }
 
     companion object {
