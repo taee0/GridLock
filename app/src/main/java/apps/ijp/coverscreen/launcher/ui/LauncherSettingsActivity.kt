@@ -196,6 +196,51 @@ class LauncherSettingsActivity : Activity() {
         }
     }
 
+    // ---- backup / restore ----------------------------------------------
+
+    private fun backupSummary(): String =
+        if (com.tv.coverscreen.SettingsBackup.hasBackup(this))
+            getString(R.string.backup_present)
+        else
+            getString(R.string.backup_none)
+
+    private fun runBackup() {
+        when (com.tv.coverscreen.SettingsBackup.backup(this)) {
+            com.tv.coverscreen.SettingsBackup.Outcome.OK ->
+                toast(R.string.backup_ok)
+            com.tv.coverscreen.SettingsBackup.Outcome.SKIPPED_CORRUPT ->
+                toast(R.string.backup_skipped_corrupt)
+            com.tv.coverscreen.SettingsBackup.Outcome.NO_SHIZUKU ->
+                toast(R.string.backup_needs_shizuku)
+            else ->
+                toast(R.string.backup_failed)
+        }
+        changed()
+    }
+
+    private fun runRestore() {
+        AlertDialog.Builder(this)
+            .setMessage(R.string.restore_confirm)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                when (com.tv.coverscreen.SettingsBackup.restore(this)) {
+                    com.tv.coverscreen.SettingsBackup.Outcome.OK ->
+                        toast(R.string.restore_ok)
+                    com.tv.coverscreen.SettingsBackup.Outcome.NO_BACKUP_FOUND ->
+                        toast(R.string.restore_none)
+                    com.tv.coverscreen.SettingsBackup.Outcome.NO_SHIZUKU ->
+                        toast(R.string.backup_needs_shizuku)
+                    else ->
+                        toast(R.string.restore_failed)
+                }
+            }
+            .show()
+    }
+
+    private fun toast(res: Int) {
+        android.widget.Toast.makeText(this, res, android.widget.Toast.LENGTH_SHORT).show()
+    }
+
     // ---- row builders -------------------------------------------------
 
     private fun section(res: Int) {

@@ -248,27 +248,40 @@ object Privileged {
      * comes back exactly where it was left. displayId targets the cover screen.
      */
     fun resume(taskId: Int, displayId: Int): Boolean {
-        if (taskId < 0) return false
-        val service = atm() ?: return false
+        if (taskId < 0) {
+            Log.d(TAG, "resume: invalid taskId " + taskId)
+            return false
+        }
+        val service = atm() ?: run {
+            Log.d(TAG, "resume: atm() unavailable (access=" + access() + ")")
+            return false
+        }
         val opts = runCatching {
             val o = ActivityOptions.makeBasic()
             if (displayId >= 0) o.launchDisplayId = displayId
             o.toBundle()
         }.getOrNull()
 
-        val started = call(
+        val startedResult = call(
             service, "startActivityFromRecents", arrayOf(INT, BUNDLE), taskId, opts
-        ).getOrNull() as? Int
+        )
+        val started = startedResult.getOrNull() as? Int
+        Log.d(TAG, "resume: startActivityFromRecents taskId=" + taskId + " displayId=" + displayId + " resultCode=" + started + " failure=" + startedResult.exceptionOrNull())
         if (started != null && started >= 0) return true
 
         // Older or vendor builds: plain reorder. The IApplicationThread slot takes
         // null, and shell's name keeps appops from rejecting us.
         val thread = runCatching { Class.forName("android.app.IApplicationThread") }.getOrNull()
-            ?: return false
-        return call(
+            ?: run {
+                Log.d(TAG, "resume: IApplicationThread class not found, cannot fall back")
+                return false
+            }
+        val fallback = call(
             service, "moveTaskToFront", arrayOf(thread, STR, INT, INT, BUNDLE),
             null, SHELL, taskId, 0, opts
-        ).isSuccess
+        )
+        Log.d(TAG, "resume: moveTaskToFront taskId=" + taskId + " displayId=" + displayId + " success=" + fallback.isSuccess + " failure=" + fallback.exceptionOrNull())
+        return fallback.isSuccess
     }
 
     /**

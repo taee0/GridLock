@@ -115,12 +115,20 @@ class WidgetLaunchActivity : Activity() {
         val app = applicationContext
         Thread {
             try {
+                Log.d(TAG, "relay start pkg=" + pkg + " target=" + target + " shizuku=" + Privileged.access())
+
                 // Already running: a resume is the whole job, and it brings the
                 // app back exactly where it was left instead of restarting it.
                 val open = Privileged.tasks(RELAY_SCAN)?.firstOrNull { it.pkg == pkg }
-                if (open != null && Privileged.resume(open.taskId, target)) return@Thread
+                Log.d(TAG, "relay existing task=" + open?.taskId + " for " + pkg)
+                if (open != null) {
+                    val resumed = Privileged.resume(open.taskId, target)
+                    Log.d(TAG, "relay resume(existing) taskId=" + open.taskId + " target=" + target + " result=" + resumed)
+                    if (resumed) return@Thread
+                }
 
                 AppUtils.launchKeyOnDisplay(app, key, activity, 0)
+                Log.d(TAG, "relay cold-launched " + pkg + " on display 0, polling for task")
 
                 // The task does not exist the instant the start returns, so the
                 // resume is retried until it does rather than fired once and hoped over.
@@ -129,7 +137,13 @@ class WidgetLaunchActivity : Activity() {
                     Thread.sleep(RELAY_POLL)
                     waited += RELAY_POLL
                     val task = Privileged.tasks(RELAY_SCAN)?.firstOrNull { it.pkg == pkg }
-                    if (task != null && Privileged.resume(task.taskId, target)) return@Thread
+                    if (task != null) {
+                        val resumed = Privileged.resume(task.taskId, target)
+                        Log.d(TAG, "relay resume(poll) waited=" + waited + " taskId=" + task.taskId + " target=" + target + " result=" + resumed)
+                        if (resumed) return@Thread
+                    } else {
+                        Log.d(TAG, "relay poll waited=" + waited + ": task for " + pkg + " not found yet")
+                    }
                 }
                 Log.w(TAG, "relay to display " + target + " timed out for " + pkg)
             } catch (t: Throwable) {

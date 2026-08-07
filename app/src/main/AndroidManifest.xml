@@ -177,19 +177,19 @@
 
         <service
             android:name="apps.ijp.coverscreen.launcher.glance_widget.GridRemoteViewsService"
-            android:exported="false"
+            android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
         <service
             android:name="apps.ijp.coverscreen.launcher.glance_widget.GridRemoteViewsServiceForOverlay"
-            android:exported="false"
+            android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
         <service
             android:name="apps.ijp.coverscreen.launcher.glance_widget.KeyBoardRemoteViewsService"
-            android:exported="false"
+            android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
         <service
             android:name="apps.ijp.coverscreen.launcher.glance_widget.KeyBoardRemoteViewsServiceForOverlay"
-            android:exported="false"
+            android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <!-- Missing from v0.10: without this declaration the system cannot
@@ -198,11 +198,11 @@
              what was typed. -->
         <service
             android:name="apps.ijp.coverscreen.launcher.glance_widget.SearchRemoteViewsService"
-            android:exported="false"
+            android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
         <service
             android:name="apps.ijp.coverscreen.launcher.glance_widget.SearchRemoteViewsServiceForOverlay"
-            android:exported="false"
+            android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <service
@@ -218,7 +218,7 @@
         <activity
             android:name="apps.ijp.coverscreen.launcher.glance_widget.WidgetLaunchActivity"
             android:excludeFromRecents="true"
-            android:exported="false"
+            android:exported="true"
             android:noHistory="true"
             android:showWhenLocked="true"
             android:taskAffinity=""

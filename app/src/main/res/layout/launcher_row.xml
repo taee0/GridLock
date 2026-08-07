@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- 56dp list item -->
+<!-- v0.10.6: root carries android:id="@+id/app_container" so
+     SearchRemoteViewsFactory.setOnClickFillInIntent(R.id.app_container, ...)
+     actually attaches to a view. It never did before this fix: this file
+     had no view named app_container at all, unlike widget_grid_view_item.xml
+     and widget_keyboard_item.xml, whose roots both declare that id, so
+     tapping a search result silently launched nothing. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/app_container"
     android:layout_width="match_parent"
     android:layout_height="56dp"
     android:background="?android:attr/selectableItemBackground"
