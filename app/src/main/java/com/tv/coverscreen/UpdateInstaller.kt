@@ -60,6 +60,7 @@ object UpdateInstaller {
             // ── Install ───────────────────────────────────────────────────────
             // Try silent Shizuku install first.
             if (Privileged.ready()) {
+                val tmpPath = "/data/local/tmp/gridlock-update.apk"
                 val result = runCatching {
                     val m = rikka.shizuku.Shizuku::class.java.getDeclaredMethod(
                         "newProcess",
@@ -68,14 +69,13 @@ object UpdateInstaller {
                         String::class.java,
                     )
                     m.isAccessible = true
-                    val proc = m.invoke(
-                        null,
-                        arrayOf("pm", "install", "-r", dest.absolutePath),
-                        null, null,
-                    ) as Process
-                    val out  = proc.inputStream.bufferedReader().readText()
+                    
+                    // Copy to /data/local/tmp so pm has read access
+                    val cpCmd = arrayOf("sh", "-c", "cp '${dest.absolutePath}' '$tmpPath' && pm install -r '$tmpPath' && rm '$tmpPath'")
+                    val proc = m.invoke(null, cpCmd, null, null) as Process
+                    val out = proc.inputStream.bufferedReader().readText()
                     val code = proc.waitFor()
-                    Log.i(TAG, "pm install exit=$code  out=$out")
+                    Log.i(TAG, "pm install exit=$code out=$out")
                     code == 0
                 }.onFailure { Log.w(TAG, "shizuku install: $it") }.getOrDefault(false)
                 onComplete(result)
