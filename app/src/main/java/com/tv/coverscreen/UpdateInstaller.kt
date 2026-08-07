@@ -57,32 +57,7 @@ object UpdateInstaller {
 
             onProgress(false)
 
-            // ── Install ───────────────────────────────────────────────────────
-            // Try silent Shizuku install first.
-            if (Privileged.ready()) {
-                val tmpPath = "/data/local/tmp/gridlock-update.apk"
-                val result = runCatching {
-                    val m = rikka.shizuku.Shizuku::class.java.getDeclaredMethod(
-                        "newProcess",
-                        Array<String>::class.java,
-                        Array<String>::class.java,
-                        String::class.java,
-                    )
-                    m.isAccessible = true
-                    
-                    // Copy to /data/local/tmp so pm has read access
-                    val cpCmd = arrayOf("sh", "-c", "cp '${dest.absolutePath}' '$tmpPath' && pm install -r '$tmpPath' && rm '$tmpPath'")
-                    val proc = m.invoke(null, cpCmd, null, null) as Process
-                    val out = proc.inputStream.bufferedReader().readText()
-                    val code = proc.waitFor()
-                    Log.i(TAG, "pm install exit=$code out=$out")
-                    code == 0
-                }.onFailure { Log.w(TAG, "shizuku install: $it") }.getOrDefault(false)
-                onComplete(result)
-                return@Thread
-            }
-
-            // Fallback: system installer dialog.
+            // ── System Package Installer ──────────────────────────────────────
             runCatching {
                 val uri = FileProvider.getUriForFile(
                     context,
@@ -96,7 +71,7 @@ object UpdateInstaller {
                 context.startActivity(intent)
                 onComplete(true)
             }.onFailure {
-                Log.e(TAG, "system install: $it")
+                Log.e(TAG, "system install failed: $it")
                 onComplete(false)
             }
         }.start()
