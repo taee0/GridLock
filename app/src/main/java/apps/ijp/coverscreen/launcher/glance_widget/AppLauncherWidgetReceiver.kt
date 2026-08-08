@@ -16,6 +16,7 @@ import apps.ijp.coverscreen.launcher.data.AppsRepository
 import apps.ijp.coverscreen.launcher.data.Settings
 import apps.ijp.coverscreen.launcher.ui.LauncherSettingsActivity
 import com.tv.coverscreen.R
+import com.tv.coverscreen.keyboard.Keys
 
 /**
  * Cover screen app launcher widget.
@@ -344,16 +345,17 @@ open class AppLauncherWidgetReceiver : AppWidgetProvider() {
         private const val TAG = "AppLauncherWidget"
 
         /** view id for every letter key in the search keypad */
-        private val SEARCH_KEYS: List<Pair<Char, Int>> = listOf(
-            'q' to R.id.key_q, 'w' to R.id.key_w, 'e' to R.id.key_e, 'r' to R.id.key_r,
-            't' to R.id.key_t, 'y' to R.id.key_y, 'u' to R.id.key_u, 'i' to R.id.key_i,
-            'o' to R.id.key_o, 'p' to R.id.key_p,
-            'a' to R.id.key_a, 's' to R.id.key_s, 'd' to R.id.key_d, 'f' to R.id.key_f,
-            'g' to R.id.key_g, 'h' to R.id.key_h, 'j' to R.id.key_j, 'k' to R.id.key_k,
-            'l' to R.id.key_l,
-            'z' to R.id.key_z, 'x' to R.id.key_x, 'c' to R.id.key_c, 'v' to R.id.key_v,
-            'b' to R.id.key_b, 'n' to R.id.key_n, 'm' to R.id.key_m
-        )
+        /**
+         * View id for every letter key in the search keypad, sourced from
+         * [Keys.LETTERS].
+         *
+         * This used to be a literal list right here. It moved out at v0.12,
+         * when the keypad itself moved into search_keypad.xml so the floating
+         * cover keyboard could inflate the same file. Two keyboards reading one
+         * layout would still drift if each kept its own idea of which character
+         * a key produces, so the table moved out with it.
+         */
+        private val SEARCH_KEYS: List<Pair<Char, Int>> = Keys.LETTERS
 
         fun push(context: Context, cls: Class<out AppWidgetProvider>) {
             val mgr = AppWidgetManager.getInstance(context)

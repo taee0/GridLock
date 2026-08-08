@@ -108,7 +108,9 @@ class WidgetLaunchActivity : Activity() {
      * the cover. The inner panel is off while the phone is folded, so the first
      * step is not visible.
      *
-     * Requires Shizuku, because the resume goes through startActivityFromRecents
+     * NOTE (v0.12): this path is a leftover and almost never runs. The
+     * ordinary branch already places the app on the cover panel through
+     * LauncherApps. Requires Shizuku, because the resume goes through startActivityFromRecents
      * as shell. Without it the caller keeps the old direct launch.
      */
     private fun relay(key: String, activity: String?, pkg: String, target: Int) {

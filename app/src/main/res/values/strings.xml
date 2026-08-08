@@ -155,4 +155,46 @@
     <string name="shizuku_start">Start Shizuku</string>
     <string name="shizuku_old">Update Shizuku</string>
     <string name="work_app">%1$s (Work)</string>
+
+    <!-- floating cover keyboard -->
+    <string name="kb_pill">Open keyboard</string>
+    <string name="kb_pill_glyph">&#9000;</string>
+    <string name="kb_preview_empty">Nothing typed yet</string>
+    <string name="opt_cover_keyboard">Keyboard on cover screen</string>
+    <string name="opt_cover_keyboard_auto">Show keyboard automatically</string>
+    <string name="kb_handle">Move keyboard</string>
+    <string name="kb_handle_glyph">&#8801;</string>
+    <string name="kb_shift">Shift</string>
+    <string name="kb_shift_glyph">&#8679;</string>
+    <string name="kb_numbers">Numbers and symbols</string>
+    <string name="kb_numbers_glyph">123</string>
+    <string name="kb_enter">Enter</string>
+    <string name="kb_enter_glyph">&#8629;</string>
+    <string name="kb_close">Close keyboard</string>
+    <string name="kb_close_glyph">&#10005;</string>
+    <string name="kb_left">Move cursor left</string>
+    <string name="kb_left_glyph">&#9664;</string>
+    <string name="kb_right">Move cursor right</string>
+    <string name="kb_right_glyph">&#9654;</string>
+
+    <!-- cover-panel notification shade -->
+    <string name="notif_tab">Notifications</string>
+    <string name="notif_title">Notifications</string>
+    <string name="notif_clear">Clear all</string>
+    <string name="notif_close">Close notifications</string>
+    <string name="notif_close_glyph">&#10005;</string>
+    <string name="notif_empty">Nothing new</string>
+    <string name="notif_dismiss">Dismiss</string>
+    <string name="notif_action">Open</string>
+    <string name="notif_reply_hint">Type a reply</string>
+    <string name="notif_now">now</string>
+    <string name="notif_count">Notifications &#183; %1$d</string>
+    <string name="notif_more">%1$d more from %2$s</string>
+    <string name="notif_less">Show less</string>
+    <string name="notif_tab_desc">%1$d notifications</string>
+    <string name="opt_cover_notifs">Notifications on cover panel</string>
+    <string name="cover_keyboard">Keyboard on cover screen</string>
+    <string name="cover_keyboard_summary">Show the keypad over other apps so you can type out there</string>
+    <string name="cover_keyboard_auto">Show keyboard automatically</string>
+    <string name="cover_keyboard_auto_summary">Bring it up whenever a text field is tapped</string>
 </resources>

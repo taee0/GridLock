@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The cover-panel notification holder. Anchored to the top edge, because that
+     is where a shade belongs and because the keyboard already owns the bottom.
+
+     Two states now, not three. v0.16 deleted the peek: a card that slid itself
+     in over whatever was on screen and folded away again on a timer. The tab
+     carries arrivals instead, which is why it grew from a bare counter into a
+     row of app icons. Seeing who it is from is most of what a peek was for,
+     and the tab can say it without taking the panel away from you. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notif_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/notif_tab"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:layout_margin="4dp"
+        android:background="@drawable/pill"
+        android:clickable="true"
+        android:contentDescription="@string/notif_tab"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:minWidth="44dp"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <ImageView
+            android:id="@+id/notif_tab_a"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="3dp"
+            android:importantForAccessibility="no"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/notif_tab_b"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="3dp"
+            android:importantForAccessibility="no"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/notif_tab_c"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="3dp"
+            android:importantForAccessibility="no"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/notif_tab_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:importantForAccessibility="no"
+            android:minWidth="12dp"
+            android:textColor="@color/fg"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/notif_full"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/notif_sheet"
+        android:orientation="vertical"
+        android:paddingBottom="6dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/notif_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="6dp"
+            android:paddingBottom="2dp">
+
+            <TextView
+                android:id="@+id/notif_heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/notif_title"
+                android:textColor="@color/dim"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/notif_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:background="@drawable/notif_chip"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/notif_clear"
+                android:textColor="@color/fg"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/notif_close"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="4dp"
+                android:clickable="true"
+                android:contentDescription="@string/notif_close"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/notif_close_glyph"
+                android:textColor="@color/dim"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/notif_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="14dp"
+            android:text="@string/notif_empty"
+            android:textColor="@color/dim"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <ScrollView
+            android:id="@+id/notif_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="false"
+            android:overScrollMode="ifContentScrolls"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/notif_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

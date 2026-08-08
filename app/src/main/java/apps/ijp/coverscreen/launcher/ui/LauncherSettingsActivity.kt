@@ -98,6 +98,9 @@ class LauncherSettingsActivity : Activity() {
         toggle(R.string.opt_sounds, s.sounds) { s.sounds = it }
         toggle(R.string.opt_gestures, s.gestures) { s.gestures = it }
         toggle(R.string.opt_autohide, s.autoHide) { s.autoHide = it }
+        toggle(R.string.opt_cover_keyboard, s.coverKeyboard) { s.coverKeyboard = it }
+        toggle(R.string.opt_cover_keyboard_auto, s.coverKeyboardAuto) { s.coverKeyboardAuto = it }
+        toggle(R.string.opt_cover_notifs, s.coverNotifications) { s.coverNotifications = it }
         slider(R.string.opt_autohide_delay, s.autoHideDelay, 1000, 30000) { s.autoHideDelay = it }
         choice(R.string.opt_overlay_pos, posName()) {
             pick(

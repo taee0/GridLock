@@ -21,4 +21,15 @@
     <color name="pill">#33FFFFFF</color>
     <color name="sheet">#F2242426</color>
     <color name="sheet_press">#26FFFFFF</color>
+
+    <!-- The notification holder sits over other apps rather than over the
+         launcher, so it cannot lean on a blur or on knowing what is behind it.
+         Nearly opaque, and very slightly warm, so it reads as a surface in
+         front of the app rather than the app having gone dark. -->
+    <color name="notif_sheet">#F0121214</color>
+
+    <!-- Pressed state for a notification card. Opaque rather than a
+         translucent white wash, because the card it covers is itself opaque
+         and layering the two produced a colour that matched neither. -->
+    <color name="card_press">#FF2C2C30</color>
 </resources>

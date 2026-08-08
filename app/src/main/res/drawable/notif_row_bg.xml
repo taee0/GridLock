@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A notification card, with a pressed state.
+
+     The v0.13 row reused setting_card, which is flat and has no pressed state,
+     so a tap gave no feedback at all until whatever it launched appeared. On a
+     cover panel that gap reads as a missed tap and gets tapped again. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/card_press" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/card" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+</selector>

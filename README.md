@@ -528,9 +528,9 @@ Shizuku runs a small server as the adb shell user and proxies binder calls throu
 | Tapping a card | Restarts the app | Resumes the exact task, exactly where you left it |
 | Swiping a card away | Hides the card | Actually removes the task, like the system switcher |
 | Usage access | Hunt for the app in a system list | Granted in one tap |
-| Launching on the cover panel | Samsung may bounce it to the inner screen | Relayed onto the cover panel reliably |
+| Launching on the cover panel | Works either way. `LauncherApps.startMainActivity` does the placement | No difference |
 
-That last row is worth explaining, because it is the single most useful thing Shizuku buys you here.
+One row above needs a correction, because this README had it wrong before v0.12: cover panel placement is **not** something Shizuku buys you. `AppUtils.launchOnDisplay` calls `LauncherApps.startMainActivity`, which runs inside system_server and clears the calling identity, so Samsung's placement check passes with zero permissions held.
 
 Samsung refuses to **place** a brand new activity on the cover display unless the caller is its own cover launcher. That refusal is what produces *"open phone to continue"*. But it does not refuse to **move a task that already exists**. So the app never asks for the placement: it starts the app on the inner display, where nothing objects, then resumes the resulting task onto the cover. The inner panel is off while the phone is folded, so you never see the first step.
 
@@ -721,7 +721,7 @@ The opposite problem - you are letting go before 500ms. Hold a little longer, or
 `STRIP_LIFT_DP` in `RecentsEngine.kt` is how far up off the bottom edge the catcher sits. It ships at 12dp. Raise it for a thicker case.
 
 **Apps open on the inner screen instead of the cover**
-This is Samsung refusing the placement. Install Shizuku - the relay path in `WidgetLaunchActivity` works around it. Also check **Launch apps on the cover screen** is on.
+This is Samsung refusing the placement. This is not a Shizuku problem. Check the accessibility service is enabled and that the target app is actually launchable on a secondary display. Also check **Launch apps on the cover screen** is on.
 
 **Auto-rotate does nothing**
 Confirm the overlay permission is granted, then turn on strict mode. If it still does nothing, your build is refusing the orientation request entirely.

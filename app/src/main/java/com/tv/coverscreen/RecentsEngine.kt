@@ -29,6 +29,9 @@ import android.view.View
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import apps.ijp.coverscreen.launcher.LauncherNotificationListener
+import com.tv.coverscreen.keyboard.KeyboardOverlay
+import com.tv.coverscreen.notifs.NotificationOverlay
 import java.util.concurrent.Executors
 import kotlin.math.abs
 
@@ -96,6 +99,17 @@ class RecentsEngine : AccessibilityService() {
      * landing, ALR pops the switcher, PRINT_HIERARCHY dumps the node tree to
      * logcat. SHOW and HIDE are the two this build adds for adb.
      */
+    /**
+     * The cover-panel shade rides the listener's own change broadcast rather
+     * than polling. The window has to belong to this service, because
+     * TYPE_ACCESSIBILITY_OVERLAY is only available to an accessibility service.
+     */
+    private val notifs = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            main.post { NotificationOverlay.sync(this@RecentsEngine) }
+        }
+    }
+
     private val commands = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.action) {
@@ -132,6 +146,12 @@ class RecentsEngine : AccessibilityService() {
             addAction(ACTION_HIDE)
         }
         registerReceiver(commands, filter, Context.RECEIVER_NOT_EXPORTED)
+        registerReceiver(
+            notifs,
+            IntentFilter(LauncherNotificationListener.ACTION_CHANGED),
+            Context.RECEIVER_NOT_EXPORTED
+        )
+        NotificationOverlay.sync(this)
         getSystemService(DisplayManager::class.java)?.registerDisplayListener(displayWatch, main)
 
         ready()
@@ -153,6 +173,8 @@ class RecentsEngine : AccessibilityService() {
     }
 
     override fun onDestroy() {
+        KeyboardOverlay.hide()
+        NotificationOverlay.hide()
         Privileged.unwatch(shizukuWatch)
         super.onDestroy()
         live = null
@@ -167,6 +189,7 @@ class RecentsEngine : AccessibilityService() {
         rotate?.stop()
         rotate = null
         runCatching { unregisterReceiver(commands) }
+        runCatching { unregisterReceiver(notifs) }
         runCatching {
             getSystemService(DisplayManager::class.java)?.unregisterDisplayListener(displayWatch)
         }
@@ -212,6 +235,12 @@ class RecentsEngine : AccessibilityService() {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         val pkg = event?.packageName?.toString() ?: return
         if (pkg == packageName) return
+
+        // The floating cover keyboard rides along on the event stream this
+        // service is already receiving, rather than standing up a second
+        // accessibility service the user would have to enable separately.
+        // It decides for itself which events it cares about.
+        KeyboardOverlay.watch(this, event)
 
         when (event.eventType) {
             AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -> {

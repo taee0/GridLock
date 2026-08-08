@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Rounded rectangle for text chips. drawable/chip is an oval, meant for the
+     circular icon plate, so it cannot be reused for a button with a label. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/chip" />
+    <corners android:radius="999dp" />
+</shape>

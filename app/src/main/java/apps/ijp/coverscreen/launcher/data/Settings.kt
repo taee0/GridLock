@@ -85,6 +85,43 @@ class Settings(context: Context) {
         get() = b("auto_hide", false)
         set(v) = p.edit().putBoolean("auto_hide", v).apply()
 
+    /**
+     * Master switch for the floating keypad on the cover panel. On by default:
+     * without it there is no way to type into another app out there at all, so
+     * defaulting it off would just look broken.
+     */
+    var coverKeyboard: Boolean
+        get() = b("cover_keyboard", true)
+        set(v) = p.edit().putBoolean("cover_keyboard", v).apply()
+
+    /**
+     * Whether it comes up by itself when a text field takes focus. Turning this
+     * off leaves the keyboard available but manual, for anyone who finds it
+     * appearing over content they were reading.
+     */
+    var coverKeyboardAuto: Boolean
+        get() = b("cover_keyboard_auto", true)
+        set(v) = p.edit().putBoolean("cover_keyboard_auto", v).apply()
+
+    /**
+     * Where the user dragged the floating keyboard to, in pixels above the
+     * bottom edge. Negative is allowed so it can be pushed below the nominal
+     * edge, because the usable bottom of the cover panel is not the same in
+     * every app.
+     */
+    var coverKeyboardLift: Int
+        get() = i("cover_keyboard_lift", 0)
+        set(v) = p.edit().putInt("cover_keyboard_lift", v.coerceIn(-200, 900)).apply()
+
+    /**
+     * Master switch for the notification shade on the cover panel. The
+     * listener that feeds it is a separate, user-granted permission, so this
+     * defaulting on cannot surface anything the user has not already allowed.
+     */
+    var coverNotifications: Boolean
+        get() = b("cover_notifs", true)
+        set(v) = p.edit().putBoolean("cover_notifs", v).apply()
+
     /** adjustable overlay position */
     var overlayPosition: Int
         get() = i("overlay_position", POS_CENTER)

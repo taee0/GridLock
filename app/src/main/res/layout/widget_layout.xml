@@ -214,78 +214,9 @@
                     android:textSize="12sp" />
             </FrameLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="6dp"
-                android:paddingEnd="6dp">
-                <TextView android:id="@+id/key_q" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="Q" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_w" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="W" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_e" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="E" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_r" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="R" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_t" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="T" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_y" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="Y" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_u" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="U" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_i" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="I" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_o" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="O" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_p" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="P" android:textColor="@color/fg" android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp">
-                <TextView android:id="@+id/key_a" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="A" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_s" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="S" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_d" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="D" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_f" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="F" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_g" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="G" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_h" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="H" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_j" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="J" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_k" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="K" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_l" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="L" android:textColor="@color/fg" android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="6dp"
-                android:paddingEnd="6dp">
-                <TextView android:id="@+id/key_z" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="Z" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_x" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="X" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_c" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="C" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_v" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="V" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_b" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="B" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_n" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="N" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_m" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:layout_margin="2dp" android:background="@drawable/setting_card" android:gravity="center" android:text="M" android:textColor="@color/fg" android:textSize="14sp" />
-                <TextView android:id="@+id/key_backspace" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="2" android:layout_margin="2dp" android:background="@drawable/setting_card" android:contentDescription="@string/key_backspace" android:gravity="center" android:text="&#9003;" android:textColor="@color/fg" android:textSize="14sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="6dp"
-                android:paddingEnd="6dp"
-                android:paddingBottom="6dp">
-                <!-- 40% of the row, left-aligned (v0.10.5): shrunk from 75%
-                     in two steps (50% at v0.10.4, then another 10 points off
-                     here) so the key stays clear of the camera cutout's
-                     pocket on the physical cover screen. Weight split 2:3
-                     with the blank spacer below. -->
-                <TextView android:id="@+id/key_space" android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="2" android:layout_margin="2dp" android:background="@drawable/setting_card" android:contentDescription="@string/key_space" android:gravity="center" android:text="@string/key_space" android:textColor="@color/dim" android:textSize="12sp" />
-                <!-- Blank spacer, not a real key. A bare View is not on
-                     RemoteViews' supported-class whitelist, which is the
-                     exact defect v0.8.1 fixed elsewhere in this same file
-                     (widget_border), reintroduced here by v0.10.1. A TextView
-                     with no text/background is used instead: it is on the
-                     whitelist and renders as nothing, same visual result. -->
-                <TextView android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="3" />
-            </LinearLayout>
+            <!-- v0.12: was 72 lines of keys inline here. Now shared with
+                 the floating cover keyboard. See search_keypad.xml. -->
+            <include layout="@layout/search_keypad" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
